@@ -162,7 +162,7 @@ class delete_vehicle extends JFrame implements ActionListener
 				if (reply == JOptionPane.YES_OPTION)
 				{
 			
-					String sql2="DELETE * FROM vehicle WHERE v_no="+jcombovehicle_no.getSelectedItem();
+					String sql2="DELETE FROM vehicle WHERE v_no="+jcombovehicle_no.getSelectedItem();
 					st.executeUpdate(sql2);
 					
 					String dt="SUCCESS";

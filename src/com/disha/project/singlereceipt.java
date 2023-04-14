@@ -67,7 +67,7 @@ public class singlereceipt extends JFrame implements ActionListener
 	JLabel text_v_no;
 	JLabel text_v_capacity;
 	
-	JButton bprint=new JButton("PRINT");
+	JButton bprint=new JButton("BACK");
 	JButton bclose=new JButton("CLOSE");
 
 	public singlereceipt()
@@ -380,7 +380,7 @@ public class singlereceipt extends JFrame implements ActionListener
     	Object source = event.getSource();
         if(source.equals(bprint))
         {
-        	
+        	dispose();
         }
         else
         if(source.equals(bclose))

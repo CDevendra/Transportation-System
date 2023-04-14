@@ -81,7 +81,7 @@ public class start extends JWindow
 //			for (int j = 0; j < 15000; j++)
 //				for (int k = 0; k < 1500; k++);
 			try {
-				Thread.sleep(1);
+				Thread.sleep(20);
 			} catch (Exception e) {
 			}
 			setVisible(true);

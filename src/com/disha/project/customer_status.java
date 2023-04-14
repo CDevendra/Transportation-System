@@ -15,7 +15,7 @@ class customer_status extends JFrame implements ActionListener
 	ResultSet rs;
 	Statement st;
 	
-	JButton bprint=new JButton("PRINT");
+	JButton bprint=new JButton("BACK");
 	JButton bhome;
 	JButton more=new JButton("MORE");
 	JButton single=new JButton("RECEIPT OF SINGLE CUSTOMER");
@@ -76,16 +76,16 @@ class customer_status extends JFrame implements ActionListener
 			con=DriverManager.getConnection("jdbc:mysql://localhost/transportation?user=root&password=");
 			st=con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			
-			String[] colheads={"Customer No","Customer Name","Customer Adrress","Phone No","Party Name","Party Address","Party Phone No","Item Name","Quantity","Rate","Amount"};
+			String[] colheads={"Customer No","Customer Name","Customer Adrress","Phone No","Party Name","Party Address","Party Phone No","Item Name","Quantity","Rate","Amount","Order Status"};
 			
-			rs=st.executeQuery("SELECT c_no,c_name,c_addr,c_phone_no,front_party_name,front_party_addr,front_party_phone_no,i_name,quantity,rate,total_amount FROM customer ORDER BY c_no");
+			rs=st.executeQuery("SELECT c_no,c_name,c_addr,c_phone_no,front_party_name,front_party_addr,front_party_phone_no,i_name,quantity,rate,total_amount, order_status FROM customer ORDER BY c_no");
 			
 			while(rs.next())
 			{
 				count++;
 			}
 
-			Object [][]results=new Object[count][11];
+			Object [][]results=new Object[count][12];
 			
 			rs.first();
 			
@@ -102,6 +102,7 @@ class customer_status extends JFrame implements ActionListener
 				results[i][8]=rs.getInt(9);
 				results[i][9]=rs.getInt(10);
 				results[i][10]=rs.getInt(11);
+				results[i][11]=rs.getString(12);
 				rs.next();
 			}
 
@@ -117,6 +118,7 @@ class customer_status extends JFrame implements ActionListener
 			table.setSelectionBackground(new Color(255, 0, 51));
         	table.setSelectionForeground(new Color(0, 0, 0));
         	table.setRowHeight(20);
+        	table.setEnabled(false);
         
 			int v=ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 			int h=ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
@@ -145,9 +147,9 @@ class customer_status extends JFrame implements ActionListener
 			dispose();
 		}
 		else
-		if(s.equals("PRINT"))
+		if(s.equals("BACK"))
 		{
-			
+			dispose();
 		}
 		else
 		if(s.equals("MORE"))

@@ -59,7 +59,7 @@ public class salary extends JFrame implements ActionListener
         
         label1=new JLabel();
         label1.setFont(new Font("MS Sans Serif", 1, 18));
-        label1.setText("SALARY  PER  DAY :");
+        label1.setText("SALARY PER DAY :");
         label1.setBounds(20 ,0, 500, 100);
         jpanel1.add(label1); 
         

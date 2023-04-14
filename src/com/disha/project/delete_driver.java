@@ -40,7 +40,7 @@ class delete_driver extends JFrame implements ActionListener
 		
 	public delete_driver()
 	{
-    	super("Driver Information DELETION Form.....");
+    	super("Driver Information DELETION Form");
     	
    		setBounds(280,150,510,455);
 		setLayout(null);
@@ -171,13 +171,14 @@ class delete_driver extends JFrame implements ActionListener
 												  JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
 				if (reply == JOptionPane.YES_OPTION)
 				{
-					String sql2="DELETE * FROM driver WHERE d_no="+jcombodriver_no.getSelectedItem();
+					System.out.println("delete dri - "+jcombodriver_no.getSelectedItem());
+					String sql2="DELETE FROM driver WHERE d_no="+jcombodriver_no.getSelectedItem();
 		
 					st.executeUpdate(sql2);
 					
 					stmt=con.createStatement();
 			
-					stmt.executeUpdate("DELETE * FROM attendance WHERE dr_no="+jcombodriver_no.getSelectedItem());
+					stmt.executeUpdate("DELETE FROM attendance WHERE dr_no="+jcombodriver_no.getSelectedItem());
 						
 					String dt="SUCCESS";
 					String dm="RECORD  DELETED  SUCCESSFULLY.";
@@ -193,6 +194,7 @@ class delete_driver extends JFrame implements ActionListener
 			}
 			catch(Exception e)
 			{
+				System.out.println("Error - "+e);
 				String dt="ERROR";
 				String dm="PLEASE... SELECT DRIVER NO.";
 				int dtype=JOptionPane.ERROR_MESSAGE;

@@ -166,10 +166,10 @@ public class login extends JFrame implements ActionListener
 				if(flag==false)
 				{
 					if(cnt>3)
-						 {
-		 					JOptionPane.showMessageDialog(null,"Limit Occurs ,Please Login again");
-		 					System.exit(0);
-		 				}
+					{
+		 				JOptionPane.showMessageDialog(null,"Limit Exceeded. Please try again later.");
+		 				System.exit(0);
+		 			}
 					String dt="ERROR";
 					String dm="INVALID USERNAME";
 					int dtype=JOptionPane.ERROR_MESSAGE;

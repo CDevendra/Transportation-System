@@ -15,14 +15,14 @@ class vehicle_status extends JFrame implements ActionListener
 	ResultSet rs;
 	Statement st;
 	
-	JButton bprint=new JButton("PRINT");
+	JButton bprint=new JButton("BACK");
 	JButton bhome=new JButton("HOME");
 	
 	JPanel jpanel=new JPanel();
 	JPanel p1=new JPanel();
 	JPanel p2=new JPanel();
 	
-	JLabel label=new JLabel("Vehicle  Information");
+	JLabel label=new JLabel("Vehicle Information");
 	
 	public vehicle_status()
 	{
@@ -101,6 +101,7 @@ class vehicle_status extends JFrame implements ActionListener
 			table.setSelectionBackground(new Color(255, 0, 51));
         	table.setSelectionForeground(new Color(0, 0, 0));
         	table.setRowHeight(20);
+        	table.setEnabled(false);
         
 			int v=ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 			int h=ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
@@ -129,9 +130,9 @@ class vehicle_status extends JFrame implements ActionListener
 			dispose();
 		}
 		else
-		if(s.equals("PRINT"))
+		if(s.equals("BACK"))
 		{
-			
+			dispose();
 		}
 	}
 }

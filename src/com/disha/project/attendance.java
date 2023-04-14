@@ -128,7 +128,7 @@ class attendance extends JFrame implements ActionListener,ItemListener
 			
 			while(rs.next())
 			{
-				if(rs.getString(6).equals("no"))
+				if(rs.getString(6).equals("yes"))
 			    {
 			    	cb[i]=new JCheckBox(""+rs.getString(1)+" : "+rs.getString(2),true);
 			     	cb[i].setBounds(80,y,300,20);
@@ -179,6 +179,7 @@ class attendance extends JFrame implements ActionListener,ItemListener
 				stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				rs = stmt.executeQuery("SELECT * FROM attendance");
 				while (j < i && rs.next()) {
+					System.out.println("dirver no - "+driver[j]);
 					if (cb[j].isSelected() == true) {
 						int days = rs.getInt(2);
 						days++;
@@ -191,7 +192,7 @@ class attendance extends JFrame implements ActionListener,ItemListener
 						con = DriverManager.getConnection("jdbc:mysql://localhost/transportation?user=root&password=");
 						Statement st = con.createStatement();
 
-						st.executeUpdate("UPDATE driver SET d_available='absent' WHERE d_no=" + driver[j]);
+						st.executeUpdate("UPDATE driver SET d_available='no' WHERE d_no=" + driver[j]);
 					}
 					j++;
 				}
@@ -222,7 +223,7 @@ class attendance extends JFrame implements ActionListener,ItemListener
 			stmt = con.createStatement();
 
 			stmt.executeUpdate("UPDATE attendance SET days=" + count + " where dr_no=" + dno);
-			con.setAutoCommit(false);
+//			con.setAutoCommit(false);
 		} // Con try
 
 		catch (Exception k) {

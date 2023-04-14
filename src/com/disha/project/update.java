@@ -25,7 +25,9 @@ public class update extends JFrame implements ActionListener
 	
 	JButton jbuttonupdate;
 	JButton jbuttoncancel;
-
+	
+	JComboBox jcomboboxdriver_no;
+	
 	public update()
 	{	
 		setTitle("Updation Process");
@@ -48,23 +50,24 @@ public class update extends JFrame implements ActionListener
 
         jlabelv_no=new JLabel();
         jlabelv_no.setFont(new Font("MS Sans Serif", 1, 12));
-        jlabelv_no.setText("ENTER  VEHICLE  NO");
+        jlabelv_no.setText("ENTER  DRIVER  NO");
         jlabelv_no.setBounds(20 ,15, 150, 100);
         jpanel1.add(jlabelv_no);
        
-        jtextv_no=new JTextField(20);
-        jtextv_no.setFont(new Font("Courier New", 1, 16));
-        jpanel1.add(jtextv_no);
-        jtextv_no.setBounds(170,50,100,30);
+//        jtextv_no=new JTextField(20);
+//        jtextv_no.setFont(new Font("Courier New", 1, 16));
+//        jpanel1.add(jtextv_no);
+//        jtextv_no.setBounds(170,50,100,30);
         
         jlabeld_no=new JLabel();
         jlabeld_no.setFont(new Font("MS Sans Serif", 1, 12));
-        jlabeld_no.setText("ENTER  DRIVER  NO");
+        jlabeld_no.setText("VEHICLE  NO");
         jlabeld_no.setBounds(20 ,55, 150, 100);
         jpanel1.add(jlabeld_no);
       
         jtextd_no=new JTextField(20);
         jtextd_no.setFont(new Font("Courier New", 1, 16));
+        jtextd_no.setEditable(false);
         jpanel1.add(jtextd_no);
         jtextd_no.setBounds(170,90,100,30);
            
@@ -94,6 +97,64 @@ public class update extends JFrame implements ActionListener
         jbuttoncancel.addActionListener(this);
        
 		setVisible(true);
+		
+		jcomboboxdriver_no = new JComboBox();
+		try
+		{
+			setconnection();
+    		Statement st0 = con.createStatement();
+    		
+			String sql2 = "SELECT d_no FROM customer WHERE order_status='Out For Delivery'";
+			st0.executeQuery(sql2);
+			rs = st0.getResultSet();
+			
+			jcomboboxdriver_no.addItem("SELECT DRIVER NUMBER");
+			while(rs.next())
+			{
+				jcomboboxdriver_no.addItem(rs.getInt("d_no"));
+			}
+						
+			con.commit();
+			con.close();
+		}
+		catch(Exception e)
+		{
+			String dt="ERROR";
+			String dm="ERROR : No Driver";
+			int dtype=JOptionPane.ERROR_MESSAGE;
+			JOptionPane.showMessageDialog((Component)null,dm,dt,dtype);
+		}
+		
+        jcomboboxdriver_no.setBounds(170,50,185,30);
+        jpanel1.add(jcomboboxdriver_no);
+        
+        jcomboboxdriver_no.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent evt)
+            {
+    			jtextd_no.setText(String.valueOf(jcomboboxdriver_no.getSelectedItem()));
+    			try
+				{
+					setconnection();
+					Statement st = con.createStatement();
+					
+					String sql4="SELECT v_no FROM customer WHERE d_no="+jcomboboxdriver_no.getSelectedItem();
+					st.executeQuery(sql4);
+					rs=st.getResultSet();
+		
+					while(rs.next())
+					{
+						jtextd_no.setText(rs.getString("v_no"));
+					}
+					con.commit();
+					con.close();
+				}
+				catch(Exception e)
+				{
+					jtextd_no.setText("");
+				}
+            }
+        });	
 	}
 
 	public void actionPerformed(ActionEvent event)
@@ -112,28 +173,33 @@ public class update extends JFrame implements ActionListener
         		st1=con.createStatement();
         		st2=con.createStatement();
         		st3=con.createStatement();
+    			
+        		String sql1="UPDATE driver SET d_available='yes' WHERE d_no=" + jcomboboxdriver_no.getSelectedItem();
+				String sql2="UPDATE vehicle SET v_available='yes' WHERE v_no="+ jtextd_no.getText();
         		
-        		int driver_no=Integer.parseInt(jtextd_no.getText());
-        		int vehicle_no=Integer.parseInt(jtextv_no.getText());
-        	
-        		String sql1="UPDATE driver SET d_available='yes' WHERE d_no="+driver_no;
-				String sql2="UPDATE vehicle SET v_available='yes' WHERE v_no="+vehicle_no;
+			System.out.println("s1 = "+sql1);
+			System.out.println("s2 = "+sql2);
 			
-				st3.executeUpdate("DELETE * FROM customer WHERE d_no="+driver_no +"AND v_no="+vehicle_no);
+//				st3.executeUpdate("DELETE FROM customer WHERE d_no="+jcomboboxdriver_no.getSelectedItem());
+				String sql3="UPDATE `customer` SET `order_status`='Delivered' WHERE `d_no`=" + jcomboboxdriver_no.getSelectedItem() + " AND `v_no`=" + jtextd_no.getText();	
+				System.out.println(sql3);
+				st3.executeUpdate(sql3);
 				st1.executeUpdate(sql1);
         		st2.executeUpdate(sql2);
         	        		
         		String dt="SUCCESS";
-				String dm="UPDATION  DONE  SUCCESSFULLY";
+				String dm="UPDATION DONE SUCCESSFULLY";
 				int dtype=JOptionPane.INFORMATION_MESSAGE;
 				JOptionPane.showMessageDialog((Component)null,dm,dt,dtype);
 				
 				jtextd_no.setText("");
-				jtextv_no.setText("");
+//				jtextv_no.setText("");
 
         		con.setAutoCommit(false);
 				con.commit();
 				con.close();
+				
+	        	dispose();
         	}
         	catch(Exception e)
         	{

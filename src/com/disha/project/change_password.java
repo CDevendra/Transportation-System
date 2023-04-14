@@ -28,8 +28,8 @@ class change_password extends JFrame implements ActionListener
 		
 	public change_password()
 	{
-       	super("Password Security.....");
-		setBounds(320,200,400,250);
+       	super("Password Security");
+		setBounds(320,200,410,258);
 		setLayout(null);
 		setResizable(false);
 		
@@ -82,73 +82,87 @@ class change_password extends JFrame implements ActionListener
     	Object source = event.getSource();
         if(source.equals(jbuttonsave))
         {
-        	try
+        	String oldPassword = jpasswordfield_old_password.getText();
+			String new_password = jpasswordfield_new_password.getText();
+			String confirmPassword = jpasswordfield_confirm_password.getText();
+			
+			if(oldPassword.matches("") || new_password.matches("") ||  confirmPassword.matches(""))  
         	{
-        		setconnection();
-        		
-        		Statement st1;
-        		Statement st2;
-        		Statement st3;
-        		
-        		st1=con.createStatement();
-        		st2=con.createStatement();
-        		st3=con.createStatement();
-        		
-        		String sql1="SELECT password FROM Login";
-        		
-        		st1.executeQuery(sql1);
-        		rs=st1.getResultSet();
-
-        		Object pass;
-        		while(rs.next())
-        		{
-        			pass=rs.getString("password");
-        			
-        			if( (jpasswordfield_old_password.getText()) .equals (pass) )
-        			{
-        				if((jpasswordfield_new_password.getText()).equals(jpasswordfield_confirm_password.getText()))
-        				{
-        					st2.executeUpdate("DELETE * FROM Login");
-        					
-        					pst=con.prepareStatement("INSERT INTO Login VALUES (?,?)");	
-        		
-        					pst.setString(1,"secret");
-        					pst.setString(2,jpasswordfield_new_password.getText());
-
-        					pst.executeUpdate();
-        					con.commit();
-        					con.close();
-        					
-        					String dt="SUCCESS";
-							String dm="PASSWORD  CHANGED  SUCCESSFULLY";
+        		String dt="ERROR";
+				String dm="ALL FIELDS ARE NECESSARY...!";
+				int dtype=JOptionPane.ERROR_MESSAGE;
+				JOptionPane.showMessageDialog((Component)null,dm,dt,dtype);
+        	}  
+			else
+			{
+	        	try
+	        	{
+	        		setconnection();
+	        		
+	        		Statement st1;
+	        		Statement st2;
+	        		Statement st3;
+	        		
+	        		st1=con.createStatement();
+	        		st2=con.createStatement();
+	        		st3=con.createStatement();
+	        		
+	        		String sql1="SELECT password FROM Login";
+	        		
+	        		st1.executeQuery(sql1);
+	        		rs=st1.getResultSet();
+	
+	        		Object pass;
+	        		while(rs.next())
+	        		{
+	        			pass=rs.getString("password");
+	        			
+	        			if( (jpasswordfield_old_password.getText()) .equals (pass) )
+	        			{
+	        				if((jpasswordfield_new_password.getText()).equals(jpasswordfield_confirm_password.getText()))
+	        				{
+	        					st2.executeUpdate("DELETE FROM Login");
+	        					
+	        					pst=con.prepareStatement("INSERT INTO Login VALUES (?,?)");	
+	        		
+	        					pst.setString(1,"admin");
+	        					pst.setString(2,jpasswordfield_new_password.getText());
+	
+	        					pst.executeUpdate();
+	        					con.commit();
+	        					con.close();
+	        					
+	        					String dt="SUCCESS";
+								String dm="PASSWORD CHANGED SUCCESSFULLY  ";
+								int dtype=JOptionPane.INFORMATION_MESSAGE;
+								JOptionPane.showMessageDialog((Component)null,dm,dt,dtype);
+								rs.close();
+								dispose();
+	        				}
+	        				else
+	        				{
+	        					String dt="ERROR";
+								String dm="ENTER SAME PASSWORD IN BOTH FIELD.";
+								int dtype=JOptionPane.INFORMATION_MESSAGE;
+								JOptionPane.showMessageDialog((Component)null,dm,dt,dtype);
+	        				}
+	        			}
+	        			else
+	        			{
+	        				String dt="ERROR";
+							String dm="OLD PASSWORD NOT MATCH.";//+jpasswordfield_old_password.getText();
 							int dtype=JOptionPane.INFORMATION_MESSAGE;
 							JOptionPane.showMessageDialog((Component)null,dm,dt,dtype);
-							rs.close();
-							dispose();
-        				}
-        				else
-        				{
-        					String dt="ERROR";
-							String dm="ENTER  SAME  PASSWORD  IN  BOTH  FIELD.";
-							int dtype=JOptionPane.INFORMATION_MESSAGE;
-							JOptionPane.showMessageDialog((Component)null,dm,dt,dtype);
-        				}
-        			}
-        			else
-        			{
-        				String dt="ERROR";
-						String dm="OLD  PASSWORD  NOT  MATCHING."+jpasswordfield_old_password.getText();
-						int dtype=JOptionPane.INFORMATION_MESSAGE;
-						JOptionPane.showMessageDialog((Component)null,dm,dt,dtype);
-        			}
-        		}
-        		con.commit();
-        		con.close();
-        	}
-        	catch(Exception e)
-        	{
-        		dispose();
-        	}
+	        			}
+	        		}
+	        		con.commit();
+	        		con.close();
+	        	}
+	        	catch(Exception e)
+	        	{
+	        		dispose();
+	        	}
+			}
         }
         else
         if(source.equals(jbuttoncancel))

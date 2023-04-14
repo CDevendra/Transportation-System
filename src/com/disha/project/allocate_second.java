@@ -467,7 +467,7 @@ public class allocate_second extends JFrame implements ActionListener
 //        		Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 //    			con=DriverManager.getConnection("jdbc:odbc:transportationDSN","","");
     			con=DriverManager.getConnection("jdbc:mysql://localhost/transportation?user=root&password=");
-        		pst=con.prepareStatement("INSERT INTO customer(c_name,c_addr,c_phone_no,front_party_name,front_party_addr,front_party_phone_no,i_name,quantity,rate,total_amount,v_no,d_no,from_date,to_date,from_place,to_place,distance) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");	
+        		pst=con.prepareStatement("INSERT INTO customer(c_name,c_addr,c_phone_no,front_party_name,front_party_addr,front_party_phone_no,i_name,quantity,rate,total_amount,v_no,d_no,from_date,to_date,from_place,to_place,distance,order_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");	
         		
         		pst.setString(1,customer_name1);
         		pst.setString(2,customer_addr1);
@@ -486,6 +486,7 @@ public class allocate_second extends JFrame implements ActionListener
         		pst.setString(15,from_place);
         		pst.setString(16,to_place);
         		pst.setInt(17,distance);	
+        		pst.setString(18,"Out For Delivery");
         		pst.executeUpdate();
 
         		Statement st1,st2;

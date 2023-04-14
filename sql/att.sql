@@ -1,0 +1,1 @@
+UPDATE `att` SET `flag`= 0 WHERE 1;

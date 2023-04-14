@@ -51,7 +51,7 @@ class more extends JFrame implements ActionListener
 		c.add(p2);
 		
 		bprint.setBounds(350,630,100,50);
-		p2.add(bprint);
+//		p2.add(bprint);
 		bprint.addActionListener(this);
 
 		bhome=new JButton("BACK",new ImageIcon(more.class.getResource("../../../images/back.gif")));
