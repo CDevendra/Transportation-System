@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2023 at 04:33 PM
+-- Generation Time: Apr 17, 2023 at 04:04 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -100,10 +100,6 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`c_no`, `c_name`, `c_addr`, `c_phone_no`, `front_party_name`, `front_party_addr`, `front_party_phone_no`, `i_name`, `quantity`, `rate`, `total_amount`, `v_no`, `d_no`, `from_date`, `to_date`, `from_place`, `to_place`, `distance`, `order_status`) VALUES
-(1, 'Vinit M', 'Nashik', '1234567890', 'Vinit Shop', 'Nashik', '2314567890', 'Glossary', 150, 10, 1500, 11, 12, '7-4-2023', '8-4-2023', 'Nashik', 'Nashik', 100, 'Out For Delivery'),
-(5, 'a', 'a', '12', 'a', 'a', '2', 'd', 2, 3, 6, 2, 2, '7-4-2023', '8-4-2023', 'a', 'a', 4, 'Out For Delivery'),
-(6, 'q', 'q', '1', 'ws', '1w', '1', '2w', 34, 2, 68, 1, 1, '7-4-2023', '8-4-2023', 'q', '1w', 45, 'Out For Delivery'),
-(7, 'devnjgut', 'r4r', '6567', 'jgjh', 'bjk', '7578', 'hiu', 675, 65, 43875, 7, 2, '7-4-2023', '12-12-12', 'r4r', 'bjk', 234, 'Out For Delivery'),
 (8, 'Nikita Mahajan', 'viman Nagar,Pune.', '6734998287', 'Pooja', 'Mehrun,Jalgaon.', '6744583700', 'Fruits', 1000, 1000, 1000000, 11, 4, '14-4-2023', '20-4-2023', 'viman Nagar,Pune.', 'Mehrun,Jalgaon.', 650, 'Out For Delivery');
 
 -- --------------------------------------------------------
